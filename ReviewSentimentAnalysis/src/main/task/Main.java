@@ -5,6 +5,7 @@ import edu.cmu.lti.jawjaw.pobj.POS;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -47,7 +48,7 @@ public class Main {
         }
 
         topics.add(topic);
-
+        List<SentimentScore> sentimentScoreList = new ArrayList<>();
 
         //now we need to filter sentences based on the topic
         sentiments.stream().map(sentiment->{
@@ -75,10 +76,23 @@ public class Main {
                 }).forEach((Object item) ->{
             JSONArray sentimentResult = (JSONArray)item;
 
-            SentimentScore sentimentScore = NLPUtils.getSentimentScore(sentimentResult);
-            System.out.print("Positive score:\t"+sentimentScore.getPositiveScore()+"\t\t\tpositive count:\t"+sentimentScore.getPositiveCount());
-            System.out.println("\t\t\tNegative score:\t"+sentimentScore.getNegativeScore()+"\t\t\tnegative count:\t"+sentimentScore.getNegativeCount());
+            sentimentScoreList.add(NLPUtils.getSentimentScore(sentimentResult));
 
         });
+        sentimentScoreList.stream().sorted((o1, o2) -> o1.getRpd().compareTo(o2.getRpd())).forEach(Main::reportResult);
+    }
+
+    public static void reportResult(SentimentScore sentimentScore){
+        //Relative Proportional Difference. Bounds: [-1, 1] Sentiment = (P − N) / (P + N)
+        //Logit scale. Bounds: [-infinity, +infinity] Sentiment = log(P + 0.5) - log(N + 0.5)
+
+        DecimalFormat df = new DecimalFormat("####.00");
+        System.out.println("PosScore:\t"+ df.format(sentimentScore.getPositiveScore())+
+                "\t\tPosCount:\t"+ df.format(sentimentScore.getPositiveCount()) +
+                "\t\tNegScore:\t"+ df.format(sentimentScore.getNegativeScore()) +
+                "\t\tNegcount:\t"+ df.format(sentimentScore.getNegativeCount()) +
+                "\t\tRPD:\t" + df.format(sentimentScore.getRpd()) +
+                "\t\tLS:\t"+ df.format(Double.isNaN(sentimentScore.getLg())?0.0:sentimentScore.getLg())
+        );
     }
 }

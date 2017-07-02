@@ -5,7 +5,8 @@ public class SentimentScore {
     private Double positiveCount = 0.0;
     private Double negativeScore = 0.0;
     private Double negativeCount = 0.0;
-
+    private Double rpd;
+    private Double lg;
     Double getPositiveScore() {
         return positiveScore;
     }
@@ -20,6 +21,14 @@ public class SentimentScore {
 
     public void setPositiveCount(Double positiveCount) {
         this.positiveCount = positiveCount;
+    }
+
+    public Double getLg() {
+        return lg;
+    }
+
+    public void setLg(Double lg) {
+        this.lg = lg;
     }
 
     Double getNegativeScore() {
@@ -52,5 +61,13 @@ public class SentimentScore {
 
     void incrementNegativeCount() {
         negativeCount++;
+    }
+
+    public void setRpd(Double rpd) {
+        this.rpd = rpd;
+    }
+
+    public Double getRpd() {
+        return rpd;
     }
 }

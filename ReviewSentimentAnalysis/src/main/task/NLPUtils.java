@@ -160,13 +160,15 @@ class NLPUtils {
                     if(scoreValue<0){
                         sentimentScore.incrementNegativeScore(scoreValue);
                         sentimentScore.incrementNegativeCount();
-//                        negativeScore+=scoreValue;
-//                        negativeCount++;
                     }
                 }
             }
 
         }
+        Double lg = Math.log(sentimentScore.getPositiveScore()+0.5)-Math.log((-1)*sentimentScore.getNegativeScore()+0.5);
+        Double rpd = (sentimentScore.getPositiveScore()-(-1)*sentimentScore.getNegativeScore())/((-1)*sentimentScore.getNegativeScore() + sentimentScore.getPositiveScore());
+        sentimentScore.setRpd(rpd);
+        sentimentScore.setLg(lg);
         return sentimentScore;
     }
 }
