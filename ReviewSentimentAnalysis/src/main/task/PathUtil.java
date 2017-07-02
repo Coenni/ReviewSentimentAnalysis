@@ -1,3 +1,5 @@
+package task;
+
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,28 +12,24 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by user on 7/2/2017.
- */
 public class PathUtil {
 
-    public static JSONParser parser = new JSONParser();
+    private static JSONParser parser = new JSONParser();
 
     public static JSONObject readJsonFile(String path, String fileName) {
         JSONObject resultJson = null;
         InputStream is = PathUtil.class.getResourceAsStream( "/"+path+"/"+fileName);
         try {
             resultJson = (JSONObject) parser.parse(IOUtils.toString( is ));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+            is.close();
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
         return resultJson;
 
     }
 
-    static List<String> getFileNames(String path) {
+    public static List<String> getFileNames(String path) {
         List<String> filenames = new ArrayList<>();
         try(
                 InputStream in = getResourceAsStream( path );
@@ -49,7 +47,7 @@ public class PathUtil {
 
     private static InputStream getResourceAsStream(String resource) {
         final InputStream in = getContextClassLoader().getResourceAsStream( resource );
-        return in == null ? new PathUtil().getClass().getResourceAsStream( resource ) : in;
+        return in == null ? PathUtil.class.getResourceAsStream( resource ) : in;
     }
 
     private static ClassLoader getContextClassLoader() {

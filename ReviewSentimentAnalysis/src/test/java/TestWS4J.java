@@ -1,3 +1,4 @@
+import task.WordnetSimilarityUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,4 +12,6 @@ public class TestWS4J {
         double similarityIndex = WordnetSimilarityUtil.compute( "staff","personnel" );
         Assert.assertTrue(similarityIndex>0.85);
     }
+
+
 }
