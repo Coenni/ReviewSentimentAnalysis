@@ -19,4 +19,7 @@ it calculates general score based on topic-contained sentence.
 ...
 Briefly, it is simplified task and needs to be improved.
 
-To test the application, run the ReviewSentimentAnalysis/src/main/task/Main.java.
+To test the application, from root folder 
+run shell script "mvn clean install" and then run the ReviewSentimentAnalysis/src/main/task/Main.java.
+
+![Alt text](./ReviewSentimentAnalysis/result.JPG?raw=true "room-topic result")

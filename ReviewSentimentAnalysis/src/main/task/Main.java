@@ -17,10 +17,7 @@ public class Main {
     private static String SEMANTIC_PATH = "semantics";
     private static String SEMANTIC_FILE = "semantics.json";
 
-
-
     public static void main(String[] args) {
-
         JSONArray sentiments = new JSONArray();
 
         //reading review files
